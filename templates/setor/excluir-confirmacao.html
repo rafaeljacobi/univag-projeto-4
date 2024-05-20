@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <div class="w-50 mx-auto">
+
+                    <h1>{% block title %}Excluir Setor{% endblock %}</h1>
+
+                    <br>
+
+                    <p class="text-center">Tem certeza que deseja excluir o setor <b>{{ setor.descricao }}</b>?</p>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <form method="POST" action="{{ url_for('setores.excluir', setor_id=setor.id) }}">
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                                <a href="{{ url_for('setores.setores') }}" class="btn btn-secondary">Cancelar</a>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

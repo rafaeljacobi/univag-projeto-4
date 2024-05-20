@@ -1,0 +1,44 @@
+<!-- Módulo de acesso exclusivo do Administrador -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %}Administração - Usuários{% endblock %}</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-end">
+                <a href="{{ url_for('auth.registrar') }}" class="btn btn-primary mb-3">Registrar Novo Usuário</a>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.perfil_str() }}</td>
+                    <td>
+                        {% if current_user.nome != usuario.nome %}
+                            <a href="{{ url_for('usuarios.excluir', usuario_id=usuario.id) }}" class="btn btn-danger">Excluir</a>
+                        {% endif%}
+                        <a href="{{ url_for('usuarios.editar', usuario_id=usuario.id) }}" class="btn btn-primary">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

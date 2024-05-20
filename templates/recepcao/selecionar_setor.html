@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="w-50 mx-auto text-center">
+                <h1>{% block title %}Setores para Atendimento{% endblock %}</h1>
+                <br>
+                <h3> Selecione o setor desejado:</h3>
+                <br>
+            </div>
+        </div>
+
+        {% for setor in setores %}
+        <div class="row">
+            <div class="w-25 mx-auto text-center">
+                <form method="GET" action="{{ url_for('recepcao.senhas', setor_id=setor.id) }}">
+                    <button type="submit" class="btn btn-primary btn-block">{{ setor.descricao }}</button>
+                </form>
+                <br>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

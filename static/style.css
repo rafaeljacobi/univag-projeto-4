@@ -1,0 +1,20 @@
+ #card-container {
+    display: flex; /* Enable flexbox layout */
+    flex-wrap: wrap; /* Allow cards to wrap to multiple lines if needed */
+    justify-content: flex-start; /* Distribute cards evenly */
+    align-items: flex-start; /* Align cards vertically at the start */
+    gap: 10px; /* Add spacing between cards (adjust as needed) */
+}
+  
+.card-with-width {
+  width: 200px; /* Adjust width as needed */
+  margin: 0; /* Remove default card margin */
+}
+
+html, body{
+  height:80%;
+}
+
+h1 {
+  text-align: center;
+}

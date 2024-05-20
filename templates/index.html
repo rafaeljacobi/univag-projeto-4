@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <div class="w-50 mx-auto">
+
+                    <br>
+
+                    <h1>{% block title %}Bem-vindo ao SGA{% endblock %}</h1>
+
+                    <br>
+
+                    <div class="container text-center">
+                        {% if current_user.is_authenticated %}
+                            <p>Você está conectado como <strong>{{ current_user.nome }}</strong></p>
+                            <br>
+                            <p>Ver o meu <a href="{{ url_for('usuarios.profile') }}">perfil</a>.</p>
+                            
+                        {% else %}
+                            <p>Você não está conectado, por favor faça seu <a href="{{ url_for('auth.login') }}">login</a> ou contate o administrador para seu registro.</p>
+                        {% endif %}
+                    <div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

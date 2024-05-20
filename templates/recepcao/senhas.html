@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">       
+        <div class="row">
+            <div class="col-4 text-center d-flex flex-column">
+                <h3>Senhas</h3>
+                <a href="" class="btn btn-primary mb-3">Próxima</a>
+                <a href="" class="btn btn-primary mb-3">Repetir</a>
+                <a href="" class="btn btn-primary mb-3">Atualizar</a>
+            </div>
+            <div class="col-4 text-center d-flex flex-column align-items-center">
+                <h3>Senha Atual</h3>
+                <div id="card-senha-atual"></div> 
+            </div>
+            <div class="col-4 text-center d-flex flex-column">
+                <h3>Atendimento</h3>
+                <a href="" class="btn btn-primary mb-3">Iniciar</a>
+                <a href="" class="btn btn-primary mb-3">Encerrar</a>
+                <a href="" class="btn btn-primary mb-3">Cancelar</a>
+            </div>
+        </div>
+
+        <h3 class="card-title">Senhas Aguardando</h3>
+        <div id="card-container"></div>
+
+        <!-- Template para os Cards -->
+        <tempate id="card-template" class="card d-none text-center card-with-width card-with-margin">
+            <div class="card-header">
+                <h5 class="card-title"></h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text"></p>
+            </div>
+        </template> 
+        
+    </div>
+
+    <script src="{{ url_for('static', filename='js/gerar-cards.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/atualizar-senhas.js') }}"></script>
+
+    <script>
+        const senhas = {{ senhas|tojson }}; // Recebe a variável 'senhas' do blueprint
+        gerarCards(senhas);
+    </script>
+
+{% endblock %}
