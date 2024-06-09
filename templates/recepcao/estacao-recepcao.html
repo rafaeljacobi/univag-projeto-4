@@ -1,0 +1,134 @@
+<!-- Página principal da estação de atendimento da recepção -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="d-flex flex-column" style="width: 90%; position: absolute; left: 5%">
+
+        <!-- Seção com as informações da estação -->
+        <div class="row btn-info" style="height: 50px; border-radius: 10px;">
+
+            <!-- Exibe o setor selecionado pelo usuário -->
+            <div class="col-4 text-center d-flex flex-column" style="justify-content: center; height: 50px;">
+                Setor: {{ setor.descricao }}
+                <p hidden class="id-setor">{{ setor.id }}</p>
+            </div> 
+
+            <!-- Exibe a estação selecionada pelo usuário -->
+            <div class="col-4 text-center d-flex flex-column" style="justify-content: center; height: 50px;">
+                Estação: {{ estacao.descricao }}
+                <p hidden class="id-estacao">{{ estacao.id }}</p>
+            </div>
+
+            <!-- Botão de comando para trocar de setor\estação -->
+            <div class="col-4 text-center d-flex flex-column" style="padding-left: 0; padding-right: 0;">
+                <a href="{{ url_for('recepcao.index') }}" class="btn btn-info d-flex align-items-center w-100" style="justify-content: center; height: 50px;  padding-left: 0; padding-right: 0; border-radius: 10px;">
+                    <span>Mudar Estação</span>
+                </a>
+            </div>
+
+        </div>
+        
+        <!-- Seção principal da estação -->
+        <div class="row">
+
+            <!-- Comandos relacionados a senha -->
+            <div class="col-4 text-center d-flex flex-column">
+
+                <h3>Senhas</h3>
+
+                {% if senha_atual %}
+
+                    <!-- Botão 1 = Chamar próxima senha-->
+                    <form method="POST" action="{{ url_for('recepcao.senhas', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=senha_atual.id, acao='proxima_senha') }}">
+                        <button type="submit" class="btn btn-primary mb-3 w-100">Próxima</button>
+                    </form>
+
+                    <!-- Botão 2 = Chamar novamente a mesma senha -->
+                    <form method="POST" action="{{ url_for('recepcao.senhas', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=senha_atual.id, acao='chamar_novamente') }}">
+                        <button type="submit" class="btn btn-primary mb-3 w-100">Repetir</button>
+                    </form>
+
+                    <!-- Botão 3 = Cancelar senha -->
+                    <form method="POST" action="{{ url_for('recepcao.senhas', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=senha_atual.id, acao='cancelar_senha') }}">
+                        <button type="submit" class="btn btn-primary mb-3 w-100">Cancelar</button>
+                    </form>
+
+
+                {% else %}
+
+                    <!-- Botão 1 = Chamar próxima senha -->
+                    <form method="POST" action="{{ url_for('recepcao.senhas', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=0, acao='proxima_senha') }}">
+                        <!-- TODO: Usar o javascript para desabilitar se não houver senhas -->
+                        <button id="botao-proximo" type="submit" class="btn btn-primary mb-3 w-100">Próxima</button>
+                    </form>
+                    
+                    <!-- Botão 2 = Chamar novamente a mesma senha -->
+                    <a href="" class="btn btn-primary mb-3 disabled">Repetir</a>
+
+                    <!-- Botão 3 = Cancelar senha -->
+                    <a href="" class="btn btn-primary mb-3 disabled">Cancelar</a>
+
+                {% endif %}
+                
+                <!-- Botão 4 = Atualizar o painel-->
+                <form method="POST" action="{{ url_for('recepcao.senhas', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=0, acao='atualizar_painel') }}">
+                    <button type="submit" class="btn btn-primary mb-3 w-100">Atualizar</button>
+                </form>
+                
+            </div>
+
+            <!-- Painel que exibe a senha atual chamada pela estação -->
+            <div class="col-4 text-center d-flex flex-column align-items-center">
+                <h3>Senha Atual</h3>
+                <div id="card-senha-atual"></div> 
+            </div>
+
+            <!-- Comandos relacionados ao antedimento - 'TODO' -->
+            <div class="col-4 text-center d-flex flex-column">
+                <h3>Atendimento</h3>
+                <a href="" class="btn btn-primary mb-3 disabled">Iniciar</a>
+                <a href="" class="btn btn-primary mb-3 disabled">Cancelar</a>
+                <a href="" class="btn btn-primary mb-3 disabled">Encerrar</a>
+            </div>
+        </div>
+
+        <!-- Painel com as senhas em espera -->
+        <div class="row">
+            <div class="col-12 text-center d-flex flex-column btn-info mb-3" style="justify-content: center; height: 50px; border-radius: 10px;">
+                <h5>Senhas Aguardando</h5>
+            </div>
+        </div>
+        <!-- Container que será manipulado pelo JavaScript -->
+        <div id="card-container"></div> 
+
+        <!-- Template para os Cards -->
+        <tempate id="card-template" class="card d-none text-center card-with-width card-with-margin">
+            <div class="card-header">
+                <h5 class="card-title"></h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text"></p>
+            </div>
+        </template> 
+        
+    </div>
+
+    <!-- Script que carrega as senhas e criar o loop principal com o servidor para atualizar as senhas -->
+    <script src="{{ url_for('static', filename='js/painel-recepcao.js') }}"></script>
+
+    <!-- Script que captura os dados do blueprint - o JavaScript não reconhece automaticamente os objetos python -->
+    <script>
+        const senha_atual = {{ senha_atual|tojson }};
+        const senhas = {{ senhas|tojson }};
+        
+        if (senha_atual) {
+            atualizarCardSenhaAtual(senha_atual);
+        }
+
+        gerarCards(senhas);
+    </script>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -1,0 +1,58 @@
+<!-- Página que exibe os dados do usuário atual --> 
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %}Usuário Atual{% endblock %}</h1>
+
+    <br>
+
+    {% if usuario %}
+
+        <div class="card">                           
+            <div class="card-header">
+                <h3></h3>
+            </div>
+
+            <!-- TODO: Testar versão como tabela -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>ID:</strong></p>
+                        <p><strong>Nome:</strong></p>
+                        <p><strong>E-mail:</strong></p>
+                        <p><strong>Perfil:</strong></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>{{ usuario.id }}</p>
+                        <p>{{ usuario.nome }}</p>
+                        <p>{{ usuario.email }}</p>
+                        <p>{{ perfil_str }}</p>
+                    </div>
+        
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="btn-group">
+                    <a href="{{ url_for('auth.mudar_senha') }}" class="btn btn-primary">Mudar senha</a>
+                </div>
+
+                <div class="btn-group">
+                    <a href="{{ url_for('usuarios.editar', usuario_id=usuario.id) }}" class="btn btn-primary mx-1">Editar Perfil</a>
+                </div>
+
+            </div>
+        </div>
+
+    {% else %}
+        <p>Erro: sem informações do usuário.</p>
+    {% endif %}
+
+{% endblock %}

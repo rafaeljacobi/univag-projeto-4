@@ -1,0 +1,46 @@
+<!-- Página para editar uma estação existente -->
+{% extends "base.html" %}
+
+{% block content %}
+ 
+    <h1>{% block title %}Editar Estação{% endblock %}</h1>
+
+    <br>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="number" class="form-control" id="estacao_id" name="estacao_id" value="{{ estacao.id }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="descricao">Descrição:</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" value="{{ estacao.descricao }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_setor">Selecione o setor:</label>
+            <select class="form-control" id="id_setor" name="id_setor">
+                {% for setor in setores %}
+                    <option value="{{ setor.id }}" {% if setor.id == estacao.id_setor %}selected{% endif %}>{{ setor.descricao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+
+                <div class="btn-group">
+                    <a href="{{ url_for('estacoes.estacoes') }}" class="btn btn-secondary mx-1">Cancelar</a>
+                </div>
+                
+            </div>
+        </div>
+        
+    </form>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<!-- Página para gerenciar as estações de atendimento do sistema -->
+{% extends "base.html" %}
+
+{% block content %} 
+
+    <h1>{% block title %}Administração - Estações{% endblock %}</h1>
+
+    <!-- Painel superior com botão para criar nova estação -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-end">
+                <a href="{{ url_for('estacoes.criar') }}" class="btn btn-primary">Criar Nova Estação</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela com o conteúdo e comandos -->
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Setor</th>
+                <th>Usuário</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for estacao in estacoes %}
+                <tr>
+                    <td>{{ estacao.id }}</td>
+                    <td>{{ estacao.descricao }}</td>
+                    <td>{{ setores.get(estacao.id_setor) }}</td>
+                    <td>{{ usuarios.get(estacao.id_usuario) or "Estação Livre" }}</td>
+                    <td>
+                        <a href="{{ url_for('estacoes.excluir', estacao_id=estacao.id) }}" class="btn btn-danger">Excluir</a>
+                        <a href="{{ url_for('estacoes.editar', estacao_id=estacao.id) }}" class="btn btn-primary">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}
