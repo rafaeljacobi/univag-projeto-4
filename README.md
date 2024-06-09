@@ -1,6 +1,6 @@
 # univag-projeto-4
 
-Projeto de um Sistema de Gestão de Atendimentos (SGA) para uma clínica médica.
+Projeto de um Sistema de Gestão de Atendimentos (SGA) para clínica médica.
 
 Para testar:
 1. Instale o Python
@@ -11,10 +11,10 @@ Para testar:
 6. Abra o navegador em: http://127.0.0.1:5000, isso deve te levar para a página inicial
 7. O login teste é "admin@admin" com a senha "123"
 8. Para testar o totem de atendimento abra outra página do navegador e digite: http://127.0.0.1:5000/totem
-9. Para testar como ficaria a estação da recepcionista digite: http://127.0.0.1:5000/recepcao
+9. Para testar como ficaria a estação da recepcionista digite: http://127.0.0.1:5000/recepcao (OBS.: caso deseje manter 2 usuários logados ao mesmo tempo, abra a segunda aba no modo 'anônimo').
 
 No momento funcional:
 - Página administrativa (criar, editar e excluir - falta atendimentos e pacientes)
-- Totem de atendimento
-- Painel da recepcionista (simulado mas já mostra as senhas que estão sendo geradas por setor)
-  
+- Totem de atendimento.
+- Painel da recepcionista.
+- Painel de senhas.
