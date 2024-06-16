@@ -1,0 +1,43 @@
+<!-- Página para o usuário mudar a senha -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %}Mudar Senha{% endblock %}</h1>
+
+    <br>
+
+    <form method="POST" action="{{ url_for('auth.mudar_senha') }}">
+
+        <div class="form-group">
+            <label for="senha_atual">Senha atual:</label>
+            <input type="password" class="form-control" id="senha_atual" name="senha_atual" required>
+        </div>
+
+        <div class="form-group">
+            <label for="nova_senha">Nova senha:</label>
+            <input type="password" class="form-control" id="nova_senha" name="nova_senha" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmar_senha">Confirmar nova senha:</label>
+            <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha" required>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Mudar senha</button>
+                </div>
+
+                <div class="btn-group">
+                    <a href="{{ url_for('usuarios.profile') }}" class="btn btn-secondary mx-1">Cancelar</a>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+                    
+{% endblock %}

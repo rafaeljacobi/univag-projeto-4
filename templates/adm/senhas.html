@@ -1,0 +1,50 @@
+<!-- Página para gerenciar as estações de atendimento do sistema -->
+{% extends "base.html" %}
+
+{% block content %} 
+
+    <h1>{% block title %}Administração - Senhas{% endblock %}</h1>
+
+    <!-- Painel superior com botão para excluir todas as senhas -->
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-end">
+                <a href="{{ url_for('senhas.excluir_tudo') }}" class="btn btn-danger">Excluir todas</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela com o conteúdo e comandos -->
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Setor</th>
+                <th>Número</th>
+                <th>Categoria</th>
+                <th>Data e Hora</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for senha in senhas %}
+                <tr>
+                    <td>{{ senha.id }}</td>
+                    <td>{{ setores_descricao.get(senha.id_setor) }}</td>
+                    <td>{{ senha.numero }}</td>
+                    <td>{{ senha.categoria }}</td>
+                    <td>{{ senha.data_hora }}</td>
+                    <td>{{ senha.status }}</td>
+                    <td>
+                        <a href="{{ url_for('senhas.excluir', senha_id=senha.id) }}" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+  
+{% endblock %}

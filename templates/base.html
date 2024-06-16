@@ -1,0 +1,91 @@
+<!-- Layout base para todas as demais páginas do sistema -->
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-100">
+
+    <!-- Cabeçalho da página principal -->
+    <head>   
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='fav-icon.png') }}">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    </head>
+
+    <!-- Corpo da página principal  -->
+    <body class="d-flex flex-column h-100">
+
+        <!-- Barra de navegação do sistema -->
+        <header class="navbar navbar-expand-sm navbar-dark" style="background-color: #0B605C;">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('usuarios.base') }}" class="navbar-brand">SGA - Vida Diagnóstico e Saúde</a>
+            {% else %}
+                <a href="{{ url_for('usuarios.index') }}" class="navbar-brand">SGA - Vida Diagnóstico e Saúde</a>
+            {% endif %}
+
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_adm() %}
+                        <li class="nav-item float-right">
+                            <a href="{{ url_for('usuarios.adm') }}" class="nav-link">Admin</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item float-right">
+                        <a href="{{ url_for('usuarios.profile') }}" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item float-right ml-auto">
+                        <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </header>
+
+        <!-- Corpo das páginas filhas justify-content-center -->
+        <div class="d-flex flex-column w-50 h-100 mx-auto mt-3"> 
+            {% block content %}
+            {% endblock content %}
+        </div>
+
+        <!-- Mensagens do sistema -->
+        {% block messages %}
+            <div class="row align-self-center text-center justify-content-center">
+                {% with messages = get_flashed_messages(with_categories=True) %} 
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == "success" %}
+                                <div class="alert alert-success">{{message}}</div>
+                            {% endif %}
+                            {% if category == "error" %}
+                                <div class="alert alert-danger">{{message}}</div>
+                            {% endif %}
+                            {% if category == "warning" %}
+                                <div class="alert alert-warning">{{message}}</div>
+                            {% endif %}
+                            {% if category == "info" %}
+                                <div class="alert alert-info">{{message}}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %} 
+                {% endwith %}
+            </div>
+        {% endblock messages %}
+
+        <!-- Rodapé da página principal, algumas páginas vão reescrever (apagar) esse rodapé -->
+        {% block footer %}
+            <div class="d-flex align-self-center text-center justify-content-center">
+                <p>&copy; 2024 - Vida Diagnóstico e Saúde</p>
+            </div>
+        {% endblock footer %}
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+    </body>
+
+</html>

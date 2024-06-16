@@ -1,0 +1,23 @@
+<!-- Página para confirmar a exclusão do paciente -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %}Excluir Paciente{% endblock %}</h1>
+
+    <br>
+
+    <p class="text-center">Tem certeza que deseja excluir o paciente <b>{{ paciente.descricao }}</b>?</p>
+
+    <br>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <form method="POST" action="{{ url_for('pacientes.excluir', paciente_id=paciente.id) }}">
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <a href="{{ url_for('pacientes.pacientes') }}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

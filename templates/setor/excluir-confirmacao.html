@@ -1,0 +1,23 @@
+<!-- Página para confirmar a exclusão de uma estação --> 
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %}Excluir Setor{% endblock %}</h1>
+
+    <br>
+
+    <p class="text-center">Tem certeza que deseja excluir o setor <b>{{ setor.descricao }}</b>?</p>
+
+    <br>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <form method="POST" action="{{ url_for('setores.excluir', setor_id=setor.id) }}">
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <a href="{{ url_for('setores.setores') }}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
