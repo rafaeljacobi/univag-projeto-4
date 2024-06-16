@@ -15,7 +15,8 @@ Para testar:
 Se desejar testar a versão web, vá para https://rjacobi.pythonanywhere.com/.
 
 No momento funcional:
-- Página administrativa (criar, editar e excluir - falta atendimentos e pacientes)
+- Página administrativa (criar, editar e excluir)
 - Totem de atendimento.
 - Painel da recepcionista.
 - Painel de senhas.
+- Atendimento \ cadastro pacientes
