@@ -5,6 +5,7 @@ from routes.setores import setor_bp
 from routes.estacoes import estacao_bp
 from routes.senhas import senha_bp
 from routes.recepcao import recepcao_bp
+from routes.pacientes import paciente_bp
 
 # Registra os Flask-blueprints do sistema
 def register_blueprints(app):
@@ -15,3 +16,4 @@ def register_blueprints(app):
     app.register_blueprint(estacao_bp)
     app.register_blueprint(senha_bp)
     app.register_blueprint(recepcao_bp)
+    app.register_blueprint(paciente_bp)
