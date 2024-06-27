@@ -90,7 +90,7 @@
                 <h3>Atendimento</h3>
 
                 {% if senha_atual %}
-                    <form method="GET" action="{{ url_for('pacientes.recepcao_criar', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=senha_atual.id) }}">
+                    <form method="GET" action="{{ url_for('pacientes.pesquisar', setor_id=setor.id, estacao_id=estacao.id, senha_atual_id=senha_atual.id) }}">
                         <button type="submit" class="btn btn-primary mb-3 w-100">Iniciar</button>
                     </form>
                 {% else %}
