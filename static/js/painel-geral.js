@@ -23,11 +23,20 @@ function playAudio() {
 }
  
 function atualizarCards(senhas) {
-    
+
+    // Senha atual no painel de destaque
+    const numeroSenha = document.getElementById("numero-senha");
+    const numeroAtual = numeroSenha.textContent;
+   
     limparDados()
     
 	if (senhas.length > 0) {
         const primeiraSenha = senhas[0];
+
+        // Senha nova no painel ?
+        if (numeroAtual !== primeiraSenha.numero && numeroAtual !== '') {
+            playAudio();
+        };
 
         senhaDestaque(primeiraSenha);
       
@@ -57,11 +66,6 @@ function senhaDestaque(senha) {
     const tituloRecepcao = document.getElementById("titulo-recepcao");
     const numeroSenha = document.getElementById("numero-senha");
     const guicheAtendente = document.getElementById("guiche-atendente");   
-
-    // Senha nova no painel
-    if (numeroSenha !== senha.numero) {
-        //playAudio();
-    };
    
     tituloRecepcao.textContent = "Recepção";
     numeroSenha.textContent = senha.numero;
@@ -70,7 +74,6 @@ function senhaDestaque(senha) {
 
 function formatarCard(card, senha) {
 	card.classList.add("text-center");
-    console.log(senha);
 	// Define o título do card
 	const cardTitle = card.querySelector(".card-title");
 	cardTitle.textContent = senha.estacao;
