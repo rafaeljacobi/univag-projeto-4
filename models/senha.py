@@ -1,3 +1,4 @@
+import datetime
 from database import db, CRUD
 
 # Definição da classe
@@ -62,6 +63,12 @@ def obter_todas_senhas():
     crud_senha = CRUD(Senha)
     senhas = crud_senha.get_all()
     return senhas
+
+# Retorna todas as senhas do dia de hoje
+def obter_senhas_hoje():
+    data_atual = datetime.date.today()
+    senhas_hoje = Senha.query.filter(Senha.data_hora >= data_atual).all()
+    return senhas_hoje
 
 # Excluir a senha relacionada ao 'id'
 def excluir_senha(id):
