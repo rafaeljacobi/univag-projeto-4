@@ -8,41 +8,51 @@
     <br>
 
     <form method="POST">
-        
+
         <div class="form-group">
             <label for="paciente_id">ID:</label>
             <input type="number" class="form-control" id="paciente_id" name="paciente_id" value="{{ paciente.id }}" readonly>
         </div>
 
         <div class="form-group">
+            <label for="nome">CPF:</label>
+            <input type="text" class="form-control" id="cpf" name="cpf" value="{{ paciente.cpf }}" required>
+        </div>
+
+        <div class="form-group">
             <label for="nome">Nome:</label>
-            <input type="text" class="form-control" id="nome" name="nome" required>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ paciente.nome }}" required>
         </div>
 
         <div class="form-group">
             <label for="data_nascimento">Data de Nascimento:</label>
-            <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+            <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="{{ data_nascimento }}" required>
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="email" name="email" value="{{ paciente.email }}" required>
         </div>
 
         <div class="form-group">
             <label for="telefone">Telefone:</label>
-            <input type="tel" class="form-control" id="telefone" name="telefone" required>
+            <input type="tel" class="form-control" id="telefone" name="telefone" value="{{ paciente.telefone }}" required>
         </div>
 
         <div class="form-group">
             <label for="sexo">Sexo:</label>
             <select class="form-control" id="sexo" name="sexo" required>
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
+                {% if paciente.sexo == "Masculino"  %}
+                    <option value="Masculino" selected>Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                {% else %}
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino" selected>Feminino</option>
+                {% endif %}
             </select>
         </div>
 
-        <div class="row">
+        <div class="row mb-3">
 
             <div class="col-12 d-flex justify-content-center">
                 <div class="btn-group">
@@ -50,7 +60,11 @@
                 </div>
 
                 <div class="btn-group">
-                    <a href="{{ url_for('perfis.perfis') }}" class="btn btn-secondary mx-1">Cancelar</a>
+                    {% if current_user.is_adm() %}
+                        <a href="{{ url_for('pacientes.pacientes') }}" class="btn btn-secondary mx-1">Cancelar</a>
+                    {% else %}
+                        <a href="{{ url_for('recepcao.senhas', setor_id=setor_id, estacao_id=estacao_id, senha_atual_id=senha_atual_id, acao='senhas_atualizar' ) }}" class="btn btn-secondary mx-1">Cancelar</a>
+                    {% endif %}
                 </div>
                 
             </div>
