@@ -8,12 +8,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='fav-icon.png') }}">
     </head>
 
     <!-- Corpo --> 
     <body>
-        
+      
 		<div class="container" >
             <div class="row vh-100" style="display: flex; align-items: center; justify-content: center;">
 
@@ -26,6 +28,16 @@
                         <br>
                         <span id="guiche-atendente" class="text-center text-white" style="font-size: 46px; text-shadow: 2px 2px 4px #000000;"></span>
                     </div>
+
+                    <!-- Botão para ativar ou desativa o som -->
+                    <div class="container">
+                        <div class="fixed-bottom" style="bottom: 30px; left: 55px;">
+                            <button id="botao-som" type="button" class="btn btn-danger">
+                                <i id="icone-som" class="bi bi-volume-mute-fill som-ativo" style="font-size: 2.5rem;"></i>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Painel lateral -->
@@ -42,7 +54,8 @@
                     <!-- Card Template -->
                     <div id="card-template" class="card text-center card-with-width card-with-margin d-none" style="border-color: black; border-radius: 10px; width: 12rem; height: 10rem;">
                         <p hidden class="card-id"></p>
-                        <div class="card-header" style="border-radius: 10px;">                         
+                        <div class="card-header" style="border-radius: 10px;">
+                            <h5 class="card-title"></h5>
                         </div>
                         <div class="card-body">
                             <strong><h3 class="card-text mb-1"></h3></strong>
@@ -55,12 +68,31 @@
 		</div>
 
         <!-- Áudio avisando de uma nova senha -->
-        <audio id="aviso-senha" src="{{ url_for('static', filename='aviso.mp3') }}">
+        <audio id="aviso-senha" src="{{ url_for('static', filename='aviso.mp3') }}" type="audio/mp3" muted autoplay />
+
+        <!-- Script para mudar os ícones do som de ativado\desativa-->
+        <script>
+            const botaoSom = document.getElementById('botao-som');
+            const iconeSom = document.getElementById('icone-som');
+            const audio = document.getElementById('aviso-senha');
+            
+            botaoSom.addEventListener('click', function() {
+                if (iconeSom.classList.contains('bi-volume-mute-fill')) {
+                    iconeSom.classList.remove('bi-volume-mute-fill');
+                    iconeSom.classList.add('bi-volume-up-fill');
+                    audio.muted = false;
+                } else {
+                    iconeSom.classList.remove('bi-volume-up-fill');
+                    iconeSom.classList.add('bi-volume-mute-fill');
+                    audio.muted = true;
+                }
+            });
+        </script>
+
 
         <!-- Script com o loop principal para atualizar as senhas no painel -->
-        <script src="{{ url_for('static', filename='js/formatar-cards.js') }}"></script>
         <script src="{{ url_for('static', filename='js/painel-geral.js') }}"></script>
-    
+   
         <script>
             const senhas = {{ senhas|tojson }}; // Recebe a variável 'senhas' do blueprint   
             atualizarCards(senhas);
