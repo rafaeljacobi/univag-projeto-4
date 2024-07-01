@@ -1,7 +1,7 @@
 import datetime
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from flask_login import login_required
-from models.senha import criar_senha, obter_senha, obter_todas_senhas, obter_ultimas_senhas, excluir_senha, excluir_todas_senhas
+from models.senha import criar_senha, obter_senha, obter_todas_senhas, obter_ultimas_senhas, excluir_senha, excluir_todas_senhas, obter_senhas_hoje
 from models.setor import obter_setor, obter_todos_setores
 from models.estacao import obter_estacao
 
@@ -102,7 +102,11 @@ def senha(setor_id, categoria):
 def gerar_senha(categoria, senha_id):
     nova_senha = 0
     
-    senhas = obter_todas_senhas()
+    # Versão 1
+    #senhas = obter_todas_senhas()
+    
+    # Versão 2
+    senhas = obter_senhas_hoje()
 
     senhas_filtradas = list(filter(lambda senha: senha.id_setor == senha_id and senha.categoria == categoria, senhas))
     if senhas_filtradas:
