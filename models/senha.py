@@ -65,9 +65,21 @@ def obter_todas_senhas():
     return senhas
 
 # Retorna todas as senhas do dia de hoje
-def obter_senhas_hoje():
-    data_atual = datetime.date.today()
-    senhas_hoje = Senha.query.filter(Senha.data_hora >= data_atual).all()
+def obter_senhas_hoje(): 
+    # 2024-07-01 07:59:53.970447
+    data_atual = datetime.datetime.now().strftime("%Y-%m-%d")
+    print(data_atual)
+    senhas = obter_todas_senhas()
+    print(senhas)
+    #senhas_hoje = Senha.query.filter(Senha.data_hora >= data_atual).all()
+    #senhas_hoje = list(filter(lambda senha: senha.data_hora >= data_atual, senhas))
+    senhas_hoje = []
+    for senha in senhas:
+        data_senha = senha.data_hora.strftime("%Y-%m-%d")
+        print(data_senha)
+        if data_senha >= data_atual:
+            senhas_hoje.append(senha)
+    print(senhas_hoje) 
     return senhas_hoje
 
 # Excluir a senha relacionada ao 'id'
@@ -82,11 +94,16 @@ def excluir_todas_senhas():
 
 # Retonar as últimas senhas chamadas ordenadas em ordem decrescente
 def obter_ultimas_senhas(id_setor, total = 4):
-    senhas = obter_todas_senhas()
+    # Versão 1
+    #senhas = obter_todas_senhas()
+    
+    # Versão 2
+    senhas = obter_senhas_hoje()
+    
     senhas_selecionadas = []
     for senha in senhas:
         if senha.id_setor == id_setor:
-            if senha.status in ("Chamando", "Atendendo"):
+            if senha.status in ("Chamando", "Atendendo", "Encerrado"):
                 senhas_selecionadas.append(senha)
                 
     # Ordenar por 'senha.data_hora' (decrescente)
