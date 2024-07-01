@@ -33,11 +33,6 @@ function atualizarCards(senhas) {
 	if (senhas.length > 0) {
         const primeiraSenha = senhas[0];
 
-        // Senha nova no painel ?
-        if (numeroAtual !== primeiraSenha.numero && numeroAtual !== '') {
-            playAudio();
-        };
-
         senhaDestaque(primeiraSenha);
       
         if (senhas.length > 1) {
@@ -48,6 +43,11 @@ function atualizarCards(senhas) {
                 cardContainer.appendChild(card);
             }
         }
+
+        // Senha nova no painel ?
+        if (numeroAtual !== primeiraSenha.numero) {
+            playAudio();
+        };
     }
 }
 
